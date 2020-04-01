@@ -17,14 +17,12 @@ function Bit(arr) {
         },
         bit: function() {
             this.carryup();
-            console.log(bitOffset);
             return (arr[offset] >> (7 - bitOffset++)) & 1;
         },
         ub: function(n) {
             let v = 0;
             while (n-- > 0) {
                 v = (v << 1) + this.bit();
-                console.log(v);
             }
             return v;
         },
@@ -37,7 +35,6 @@ function Bit(arr) {
             return v;
         },
         u8: function() {
-            console.debug("u8()", arr, offset, arr[offset]);
             this.align();
             return arr[offset++];
         },
