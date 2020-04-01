@@ -27,9 +27,7 @@ function swfdump(arr) {
     console.log("swfdump:", arr);
     let bit = new Bit(arr);
     let display = document.getElementById("display");
-    for (let e of display.children) {  // clear elements in display
-        display.removeChild(e);
-    }
+    display.innerHTML = "";  // clear all elements in display
     let swfheader = document.getElementById("swfheader").cloneNode(true);
     swfheader.id = "";
     display.append(swfheader);
