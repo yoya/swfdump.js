@@ -47,7 +47,7 @@ function swfdump(arr) {
         yMax = bit.sb(rectBit) / TWIPS;
     let rate  = bit.u16(),
         count = bit.u16();
-    tableEntry(swfheader, "FrameSize" , "x:"+xMin+"..."+xMax+", y:"+yMin+"..."+yMax);
-    tableEntry(swfheader, "FrameRate" , rate / 0x100);
-    tableEntry(swfheader, "FrameCount", count);
+    tableEntry(swfmovieheader, "FrameSize" , "x:"+xMin+"..."+xMax+", y:"+yMin+"..."+yMax);
+    tableEntry(swfmovieheader, "FrameRate" , rate / 0x100);
+    tableEntry(swfmovieheader, "FrameCount", count);
 }
