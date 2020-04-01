@@ -1,5 +1,6 @@
 "use strict";
 
+var TWIPS = 20;
 
 document.addEventListener("DOMContentLoaded", function(event) {
     main();
@@ -10,7 +11,6 @@ function main() {
 }
 
 function tableEntry(table, key, value) {
-    console.log(table);
     var thead = table.children[0];
     var tbody = table.children[1];
     let thead_tr = thead.children[0];
@@ -39,4 +39,17 @@ function swfdump(arr) {
     tableEntry(swfheader, "Signature" , sig);
     tableEntry(swfheader, "Version"   , ver);
     tableEntry(swfheader, "FileLength", filelen);
+    let swfmovieheader = document.getElementById("swfmovieheader").cloneNode(true);
+    swfmovieheader.id = "";
+    display.append(swfmovieheader);
+    let rectBit = bit.ub(5),
+        xMin = bit.sb(rectBit) / TWIPS,
+        xMax = bit.sb(rectBit) / TWIPS,
+        yMin = bit.sb(rectBit) / TWIPS,
+        yMax = bit.sb(rectBit) / TWIPS;
+    let rate  = bit.u16(),
+        count = bit.u16();
+    tableEntry(swfheader, "FrameSize" , "x:"+xMin+"..."+xMax+", y:"+yMin+"..."+yMax);
+    tableEntry(swfheader, "FrameRate" , rate / 0x100);
+    tableEntry(swfheader, "FrameCount", count);
 }
