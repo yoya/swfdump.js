@@ -33,12 +33,12 @@ function Bit(arr) {
         },
         u16: function() {
             this.align();
-            return arr[offset++] + arr[offset++] << 8;
+            return arr[offset++] + (arr[offset++] << 8);
         },
         u32: function() {
             this.align();
-            return arr[offset++] + arr[offset++] << 8 +
-                arr[offset++] << 16 + arr[offset++] << 24;
+            return arr[offset++] + (arr[offset++] << 8) +
+                (arr[offset++] << 16) + (arr[offset++] << 24);
         },
         string: function(n) {
             let data = []
