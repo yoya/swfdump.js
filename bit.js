@@ -5,24 +5,34 @@ function Bit(arr) {
     var bitOffset = 0;
     this.__proto__ = {
         carryup: function() {
-            while (this.bitOffset > 7) {
+            while (bitOffset > 7) {
                 bitOffset -= 8;  offset++;
             }
         },
         align: function() {
             this.carryup();
             if (bitOffset > 0) {
-                thisbitOffset = 0;  offset++;
+                bitOffset = 0;  offset++;
             }
         },
         bit: function() {
             this.carryup();
-            return (arr[offset++] >> (7 - bitOffset)) & 1;
+            console.log(bitOffset);
+            return (arr[offset] >> (7 - bitOffset++)) & 1;
         },
-        bits: function(n) {
+        ub: function(n) {
             let v = 0;
-            while (--n) {
-                v = (v << 1) + bit();
+            while (n-- > 0) {
+                v = (v << 1) + this.bit();
+                console.log(v);
+            }
+            return v;
+        },
+        sb: function(n) {
+            let v = this.ub(n);
+            return v;
+            if (v & (1 << (n-1))) {
+                v -= (1 << n);
             }
             return v;
         },
