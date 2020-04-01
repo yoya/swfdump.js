@@ -15,6 +15,12 @@ function Bit(arr) {
                 bitOffset = 0;  offset++;
             }
         },
+        offset: function() {
+            return offset;
+        },
+        seek: function(o) {
+            offset = o;
+        },
         bit: function() {
             this.carryup();
             return (arr[offset] >> (7 - bitOffset++)) & 1;
@@ -48,7 +54,7 @@ function Bit(arr) {
                 (arr[offset++] << 16) + (arr[offset++] << 24);
         },
         string: function(n) {
-            let data = []
+            let data = [];
             while (n--) {
                 data.push(String.fromCharCode(this.u8()));
             }
