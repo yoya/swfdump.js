@@ -1,7 +1,5 @@
 "use strict";
 
-var TWIPS = 20;
-
 document.addEventListener("DOMContentLoaded", function(event) {
     main();
 });
@@ -24,7 +22,7 @@ function tableEntry(table, key, value) {
 }
 
 function swfdump(arr) {
-    console.log("swfdump:", arr);
+    console.debug("swfdump:", arr);
     let bit = new Bit(arr);
     let display = document.getElementById("display");
     display.innerHTML = "";  // clear all elements in display
@@ -40,11 +38,7 @@ function swfdump(arr) {
     let swfmovieheader = document.getElementById("swfmovieheader").cloneNode(true);
     swfmovieheader.id = "";
     display.append(swfmovieheader);
-    let rectBit = bit.ub(5),
-        xMin = bit.sb(rectBit) / TWIPS,
-        xMax = bit.sb(rectBit) / TWIPS,
-        yMin = bit.sb(rectBit) / TWIPS,
-        yMax = bit.sb(rectBit) / TWIPS;
+    let [xMin, xMax, yMin, yMax] = SWFRect(bit);
     let rate  = bit.u16(),
         count = bit.u16();
     tableEntry(swfmovieheader, "FrameSize" , "x:"+xMin+"..."+xMax+", y:"+yMin+"..."+yMax);
