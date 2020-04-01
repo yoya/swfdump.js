@@ -2,20 +2,27 @@
   <head>
     <title> swfdump </title>
     <style>
-      
+      table { border: 2px #800080 solid; background-color:#CCC; }
+      thead { background-color:#EFF; }
+      tbody { background-color:#FFE; }
     </style>
     <script type="text/javascript" src="bit.js"> </script>
+    <script type="text/javascript" src="drop.js"> </script>
     <script type="text/javascript" src="swfdump.js"> </script>
   </head>
-  Drop File Here.
-  <table id="swfheader">
-    <thead> <tr> </tr> </thead>
-    <tbody> <tr> </tr> </tbody>
-  </table>
-  <table id="swftags">
-    <tr> </tr>  <tr> </tr>
-  </table>
   <body>
+    Drop File Here.
+    <div id="display">  </div>
+    <div id="template" style="display:none">
+      <table id="swfheader">
+        <thead> <tr> </tr> </thead>
+        <tbody> <tr> </tr> </tbody>
+      </table>
+      <table id="swftag">
+        <thead> <tr> </tr> </thead>
+        <tbody> <tr> </tr> </tbody>
+      </table>
+      </div>
   </body> 
 </html>
 

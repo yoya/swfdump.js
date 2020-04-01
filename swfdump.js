@@ -26,32 +26,17 @@ function tableEntry(table, key, value) {
 function swfdump(arr) {
     console.log("swfdump:", arr);
     let bit = new Bit(arr);
-    let headerTable = document.getElementById("swfheader");
-    let sig = bit.string(3), ver = bit.u8();
-    tableEntry(headerTable, "signature", sig);
-    tableEntry(headerTable, "version", ver);
-}
-
-
-function dropFunction(target, func) {
-    var cancelEvent = function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        return false;
+    let display = document.getElementById("display");
+    for (let e of display.children) {  // clear elements in display
+        display.removeChild(e);
     }
-    target.addEventListener("dragover" , cancelEvent, false);
-    target.addEventListener("dragenter", cancelEvent, false);
-    target.addEventListener("drop"     , function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        var file = e.dataTransfer.files[0];
-        if (file) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                let arr = new Uint8Array(e.target.result);
-                func(arr);
-            }
-            reader.readAsArrayBuffer(file);
-        }
-    }, false);
+    let swfheader = document.getElementById("swfheader").cloneNode(true);
+    swfheader.id = "";
+    display.append(swfheader);
+    let sig     = bit.string(3),
+        ver     = bit.u8(),
+        filelen = bit.u32();
+    tableEntry(swfheader, "Signature" , sig);
+    tableEntry(swfheader, "Version"   , ver);
+    tableEntry(swfheader, "FileLength", filelen);
 }
