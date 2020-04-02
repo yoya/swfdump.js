@@ -132,7 +132,10 @@ const SWFTags = {
 }
 
 function SWFTagName(id) {
-    return SWFTags[id][0];
+    if (id in SWFTags) {
+        return SWFTags[id][0];
+    }
+    return "Unknown";
 }
 
 function SWFTagType(code) {

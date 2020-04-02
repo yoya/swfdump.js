@@ -25,6 +25,24 @@ function tableEntry(table, key, value) {
     tbody_tr.append(td)
 }
 
+function tableFooter(table) {
+    let thead = table.children[0];
+    if (table.children.length > 2) { // with caption
+        thead = table.children[1];
+    }
+    const thead_tr = thead.children[0];
+    const colSpan = thead_tr.children.length;
+    const tfoot = document.createElement("tfoot");
+    const tr = document.createElement("tr");
+    const td = document.createElement("td");
+    td.colSpan = colSpan;
+    table.append(tfoot);
+    tfoot.append(tr);
+    tr.append(td);
+    return td;
+}
+
+
 function swfdump(arr) {
     console.debug("swfdump:", arr);
     const bit = new Bit(arr);
@@ -55,21 +73,34 @@ function swfdump(arr) {
 
 function swfdump_tags(display, bit, count) {
     let prevCode = null;
+    let i = 0;
     while (bit.has(2)) {
         let [code, length] = SWFTagHeader(bit);
+        let contentOffset = bit.offset();
         let tagType = SWFTagType(code);
         let swftag_id = ["swfunknowntag","swfdefinitiontag", "swfoveralltag",
                          "swfplaylisttag", "swfactiontag" ] [tagType];
         const swftag = document.getElementById(swftag_id).cloneNode(true);
         swftag.className = swftag.id;
         swftag.id = "";
-        if (code !== 1) {
+        if ((code !== 1) || (count)) {
             swftag.style = "float:left";
         }
         display.append(swftag);
         tableEntry(swftag, "Code", SWFTagName(code)+"("+code+")");
         tableEntry(swftag, "Length", length);
-        bit.seek(bit.offset() + length);
+        if (code === 39) {
+            let spriteId   = bit.u16();
+            let frameCount = bit.u16();
+            tableEntry(swftag, "SpriteId", spriteId);
+            tableEntry(swftag, "FrameCount", frameCount);
+            var td = tableFooter(swftag);
+            swfdump_tags(td, bit, frameCount);
+        }
+        bit.seek(contentOffset + length);
         prevCode = code;
+        if ((count && (count <= ++i)) || (code === 0/*End*/)) {
+            break;
+        }
     }
 }
