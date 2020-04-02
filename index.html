@@ -5,6 +5,13 @@
       table { border: 2px #800080 solid; background-color:#CCC; }
       thead { background-color:#EFF; }
       tbody { background-color:#FFE; }
+      tfoot { background-color:#EEE; }
+      .swfdefinitiontag { background-color:#0FF; }
+      .swfoveralltag    { background-color:#FF0; }
+      .swfplaylisttag   { background-color:#0F0; }
+      .swfactiontag     { background-color:#F00; }
+      .swfunknowntag    { background-color:#80F; }
+      tbody { background-color:#FFE; }
     </style>
     <script type="text/javascript" src="drop.js"> </script>
     <script type="text/javascript" src="bit.js"> </script>
@@ -12,22 +19,32 @@
     <script type="text/javascript" src="dump.js"> </script>
   </head>
   <body>
-    Drop SWF File Here.
-    <div id="display">  </div>
+    <div id="display"> Drop SWF File Here. </div>
     <div id="template" style="display:none">
       <table id="swfheader">
-        <thead> <tr> </tr> </thead>
-        <tbody> <tr> </tr> </tbody>
+        <caption> SWF Header </caption>
+        <thead> <tr> </tr> </thead> <tbody> <tr> </tr> </tbody>
       </table>
       <table id="swfmovieheader">
-        <thead> <tr> </tr> </thead>
-        <tbody> <tr> </tr> </tbody>
+        <caption> SWF Movie Header </caption>
+        <thead> <tr> </tr> </thead> <tbody> <tr> </tr> </tbody>
       </table>
-      <table id="swftag">
-        <thead> <tr> </tr> </thead>
-        <tbody> <tr> </tr> </tbody>
+      <table id="swfdefinitiontag">
+        <thead> <tr> </tr> </thead> <tbody> <tr> </tr> </tbody>
       </table>
-      </div>
+      <table id="swfoveralltag">
+        <thead> <tr> </tr> </thead> <tbody> <tr> </tr> </tbody>
+      </table>
+      <table id="swfplaylisttag">
+        <thead> <tr> </tr> </thead> <tbody> <tr> </tr> </tbody>
+      </table>
+      <table id="swfactiontag">
+        <thead> <tr> </tr> </thead> <tbody> <tr> </tr> </tbody>
+      </table>
+      <table id="swfunknowntag">
+        <thead> <tr> </tr> </thead> <tbody> <tr> </tr> </tbody>
+      </table>
+    </div>
   </body> 
 </html>
 
