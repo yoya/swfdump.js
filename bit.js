@@ -21,6 +21,9 @@ function Bit(arr) {
         seek: function(o) {
             offset = o;
         },
+        has: function(n) {
+            return (offset + n) <= arr.length;
+        },
         bit: function() {
             this.carryup();
             return (arr[offset] >> (7 - bitOffset++)) & 1;
