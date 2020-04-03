@@ -45,7 +45,7 @@ function tableFooter(table) {
 
 function swfdump(arr) {
     console.debug("swfdump:", arr);
-    const bit = new Bit(arr);
+    let bit = new Bit(arr);
     const display = document.getElementById("display");
     display.innerHTML = "";  // clear all elements in display
     const swfheader = document.getElementById("swfheader").cloneNode(true);
@@ -58,6 +58,17 @@ function swfdump(arr) {
     tableEntry(swfheader, "Signature" , sig);
     tableEntry(swfheader, "Version"   , ver);
     tableEntry(swfheader, "FileLength", filelen);
+    //
+    if (sig === "FWS") {
+        // nothing to do
+    } else if (sig === "CWS") {
+        const inflate = new Zlib.Inflate(arr.subarray(8));
+        bit = new Bit(inflate.decompress());
+    } else {
+        console.error("Signature:"+sig+" not supported yet");
+        return ;
+    }
+    //
     const swfmovieheader = document.getElementById("swfmovieheader").cloneNode(true);
     swfmovieheader.id = "";
     // swfmovieheader.style = "float:left";
