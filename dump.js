@@ -79,12 +79,11 @@ function swfdump(arr) {
     tableEntry(swfmovieheader, "FrameSize" , rect.string());
     tableEntry(swfmovieheader, "FrameRate" , rate / 0x100);
     tableEntry(swfmovieheader, "FrameCount", count);
-    swfdump_tags(display, bit, 0);
+    swfdump_tags(display, bit, false);
 }
 
-function swfdump_tags(display, bit, count) {
+function swfdump_tags(display, bit, inSprite) {
     let prevCode = null;
-    let i = 0;
     while (bit.has(2)) {
         let [code, length] = SWFTagHeader(bit);
         let contentOffset = bit.offset();
@@ -94,9 +93,14 @@ function swfdump_tags(display, bit, count) {
         const swftag = document.getElementById(swftag_id).cloneNode(true);
         swftag.className = swftag.id;
         swftag.id = "";
-        if ((code !== 1) || (count)) {
-            swftag.style = "float:left";
+        let style = "";
+        if (! inSprite) {
+            style = "margin: 2px ;";
         }
+        if ((code !== 1/*ShowFrame*/) || inSprite) {
+            style += "float: left ;";
+        }
+        swftag.style = style;
         display.append(swftag);
         tableEntry(swftag, "Code", SWFTagName(code)+"("+code+")");
         tableEntry(swftag, "Length", length);
@@ -106,12 +110,12 @@ function swfdump_tags(display, bit, count) {
             tableEntry(swftag, "SpriteId", spriteId);
             tableEntry(swftag, "FrameCount", frameCount);
             var td = tableFooter(swftag);
-            swfdump_tags(td, bit, frameCount);
+            swfdump_tags(td, bit, true);
+        }
+        if (code === 0/*End*/) {
+            break ;
         }
         bit.seek(contentOffset + length);
         prevCode = code;
-        if ((count && (count <= ++i)) || (code === 0/*End*/)) {
-            break;
-        }
     }
 }
